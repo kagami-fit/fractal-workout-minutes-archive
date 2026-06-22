@@ -3,6 +3,17 @@ const state = {
   selectedId: null,
 };
 
+const ACTION_STATUS_STORAGE_KEY = "fractal-workout-minutes-action-statuses";
+const ACTION_STATUS_OPTIONS = ["未着手", "進行中", "確認中", "保留", "完了", "未設定"];
+const ACTION_STATUS_KEYS = {
+  未着手: "todo",
+  進行中: "active",
+  確認中: "review",
+  保留: "hold",
+  完了: "done",
+  未設定: "unset",
+};
+
 const els = {
   archiveList: document.querySelector("#archiveList"),
   detailPane: document.querySelector("#detailPane"),
@@ -17,6 +28,7 @@ await init();
 async function init() {
   els.refreshButton.addEventListener("click", () => loadRecords());
   els.detailPane.addEventListener("click", handleDetailClick);
+  els.detailPane.addEventListener("change", handleDetailChange);
   els.imageLightbox.addEventListener("click", handleLightboxClick);
   els.lightboxClose.addEventListener("click", closeLightbox);
   document.addEventListener("keydown", handleDocumentKeydown);
@@ -124,7 +136,7 @@ function renderDetail(record) {
         ${listPanel("要約", minutes.summary)}
         ${listPanel("議題", minutes.agenda)}
         ${listPanel("決定事項", minutes.decisions)}
-        ${actionPanel(minutes.actionItems)}
+        ${actionPanel(record.id, minutes.actionItems)}
         ${listPanel("課題・懸念", minutes.risks)}
         ${listPanel("次回までに", minutes.nextSteps)}
         ${keywordPanel(minutes.keywords)}
@@ -144,17 +156,22 @@ function listPanel(title, items = []) {
   `;
 }
 
-function actionPanel(items = []) {
+function actionPanel(recordId, items = []) {
   const rows = (items || [])
-    .map(
-      (item) => `
+    .map((item, index) => {
+      const status = getActionStatus(recordId, index, item.status || "未設定");
+      return `
       <tr>
         <td data-label="担当">${escapeHtml(item.owner || "未設定")}</td>
         <td data-label="タスク">${escapeHtml(item.task || "")}</td>
         <td data-label="期限">${escapeHtml(item.due || "未設定")}</td>
-        <td data-label="状態"><span class="status-badge">${escapeHtml(item.status || "未設定")}</span></td>
-      </tr>`
-    )
+        <td data-label="状態">
+          <select class="status-select status-${escapeHtml(statusKey(status))}" data-action-status data-record-id="${escapeHtml(recordId)}" data-action-index="${index}" aria-label="状態を変更">
+            ${statusOptions(status)}
+          </select>
+        </td>
+      </tr>`;
+    })
     .join("");
   return `
     <section class="insight-panel">
@@ -165,6 +182,48 @@ function actionPanel(items = []) {
       </table>
     </section>
   `;
+}
+
+function statusOptions(currentStatus) {
+  const statuses = ACTION_STATUS_OPTIONS.includes(currentStatus)
+    ? ACTION_STATUS_OPTIONS
+    : [currentStatus, ...ACTION_STATUS_OPTIONS];
+  return statuses
+    .map((status) => `<option value="${escapeHtml(status)}" ${status === currentStatus ? "selected" : ""}>${escapeHtml(status)}</option>`)
+    .join("");
+}
+
+function handleDetailChange(event) {
+  const select = event.target.closest("[data-action-status]");
+  if (!select) return;
+
+  saveActionStatus(select.dataset.recordId, select.dataset.actionIndex, select.value);
+  select.className = `status-select status-${statusKey(select.value)}`;
+}
+
+function getActionStatus(recordId, actionIndex, fallbackStatus) {
+  const overrides = getActionStatusOverrides();
+  return overrides?.[recordId]?.[actionIndex] || fallbackStatus || "未設定";
+}
+
+function saveActionStatus(recordId, actionIndex, status) {
+  if (!recordId || actionIndex === undefined) return;
+  const overrides = getActionStatusOverrides();
+  overrides[recordId] ||= {};
+  overrides[recordId][actionIndex] = status;
+  localStorage.setItem(ACTION_STATUS_STORAGE_KEY, JSON.stringify(overrides));
+}
+
+function getActionStatusOverrides() {
+  try {
+    return JSON.parse(localStorage.getItem(ACTION_STATUS_STORAGE_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function statusKey(status) {
+  return ACTION_STATUS_KEYS[status] || "custom";
 }
 
 function keywordPanel(items = []) {

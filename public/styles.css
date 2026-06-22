@@ -39,6 +39,7 @@ img {
 
 button,
 input,
+select,
 textarea {
   font: inherit;
 }
@@ -258,6 +259,7 @@ label {
 }
 
 input,
+select,
 textarea {
   width: 100%;
   border: 1px solid var(--line);
@@ -269,6 +271,7 @@ textarea {
 }
 
 input:focus,
+select:focus,
 textarea:focus {
   border-color: var(--silver);
   box-shadow: 0 0 0 3px rgba(154, 136, 102, 0.18);
@@ -490,6 +493,42 @@ textarea {
 
 .status-badge {
   padding: 5px 8px;
+}
+
+.status-select {
+  width: 104px;
+  min-height: 32px;
+  padding: 5px 28px 5px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.status-select.status-todo,
+.status-select.status-unset {
+  background: #eef1f1;
+  color: #314145;
+}
+
+.status-select.status-active {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.status-select.status-review {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.status-select.status-hold {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.status-select.status-done {
+  background: #f0fdf4;
+  color: #166534;
 }
 
 .keyword-list {
@@ -926,6 +965,10 @@ textarea {
     gap: 10px;
     border-bottom: 0;
     padding: 7px 0;
+  }
+
+  .status-select {
+    width: min(160px, 100%);
   }
 
   .action-table td::before {
