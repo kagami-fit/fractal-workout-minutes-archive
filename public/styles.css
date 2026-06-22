@@ -7,11 +7,13 @@
   --paper: #f7f8f7;
   --surface: #ffffff;
   --blue: #314145;
-  --teal: #0f766e;
-  --amber: #8f9a9d;
+  --gold: #9a8866;
+  --gold-2: #ddc989;
+  --sand: #f3efe7;
+  --amber: #9a8866;
   --rose: #be123c;
-  --indigo: #657577;
-  --silver: #8f9a9d;
+  --indigo: #59696b;
+  --silver: #9a8866;
   --smoke: #314145;
   --shadow: 0 26px 60px rgba(30, 40, 42, 0.12);
 }
@@ -512,23 +514,23 @@ textarea {
 }
 
 .status-select.status-active {
-  background: #ecfdf5;
-  color: #047857;
+  background: var(--sand);
+  color: #77694f;
 }
 
 .status-select.status-review {
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: #f7f8f7;
+  color: var(--smoke);
 }
 
 .status-select.status-hold {
-  background: #fff7ed;
-  color: #c2410c;
+  background: #fffafa;
+  color: var(--rose);
 }
 
 .status-select.status-done {
-  background: #f0fdf4;
-  color: #166534;
+  background: #070707;
+  color: #fff;
 }
 
 .keyword-list {
@@ -712,7 +714,7 @@ textarea {
   display: block;
   width: 38%;
   height: 100%;
-  background: linear-gradient(90deg, var(--smoke), var(--amber), var(--teal));
+  background: linear-gradient(90deg, var(--smoke), var(--gold), var(--gold-2));
   animation: progress 1.5s ease-in-out infinite;
 }
 
