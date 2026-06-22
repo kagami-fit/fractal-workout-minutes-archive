@@ -1,4 +1,4 @@
-name: Deploy Minutes Archive
+name: Deploy Meeting Archive
 
 on:
   push:

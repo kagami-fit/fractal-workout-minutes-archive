@@ -51,7 +51,7 @@ app.use((error, _req, res, _next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`FRACTAL WORKOUT Minutes Archive: http://localhost:${PORT}`);
+  console.log(`FRACTAL WORKOUT Meeting Archive: http://localhost:${PORT}`);
 });
 
 async function readRecords() {

@@ -1,5 +1,5 @@
 {
-  "name": "fractal-workout-minutes-archive",
+  "name": "fractal-workout-meeting-archive",
   "version": "1.0.0",
   "description": "FRACTAL WORKOUT の議事録と図解を日付別に見せる共有用Webアーカイブ",
   "main": "server/index.js",

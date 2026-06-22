@@ -7,13 +7,10 @@
   --paper: #f7f8f7;
   --surface: #ffffff;
   --blue: #314145;
-  --gold: #9a8866;
-  --gold-2: #ddc989;
-  --sand: #f3efe7;
-  --amber: #9a8866;
+  --amber: #8f9a9d;
   --rose: #be123c;
-  --indigo: #59696b;
-  --silver: #9a8866;
+  --indigo: #657577;
+  --silver: #8f9a9d;
   --smoke: #314145;
   --shadow: 0 26px 60px rgba(30, 40, 42, 0.12);
 }
@@ -514,8 +511,8 @@ textarea {
 }
 
 .status-select.status-active {
-  background: var(--sand);
-  color: #77694f;
+  background: #eef1f1;
+  color: var(--smoke);
 }
 
 .status-select.status-review {
@@ -714,7 +711,7 @@ textarea {
   display: block;
   width: 38%;
   height: 100%;
-  background: linear-gradient(90deg, var(--smoke), var(--gold), var(--gold-2));
+  background: linear-gradient(90deg, var(--smoke), var(--amber), var(--silver));
   animation: progress 1.5s ease-in-out infinite;
 }
 
