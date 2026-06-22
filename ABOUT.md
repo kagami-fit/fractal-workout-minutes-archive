@@ -42,8 +42,7 @@ http://localhost:3000
 
 - ルートプロジェクト — 開発中
 - `public/` — 稼働中。日付別アーカイブ、詳細表示、図解画像表示を実装済み
-- `public/records.json` — 稼働中。FW向けサンプル議事録とAIMTG議事録を登録済み
-- `public/records/2026-05-25-fw-archive-kickoff/` — 稼働中。image-gen2生成の運用フロー図解を同梱済み
+- `public/records.json` — 稼働中。AIMTG議事録のみ登録済み
 - `public/records/2026-05-25-ai-mtg/` — 稼働中。image-gen2生成のAIMTG図解を同梱済み
 - `server/` — 稼働中。ローカル確認用サーバーとして実装済み
-- GitHub Pages公開 — リポジトリ作成後に有効化
+- GitHub Pages公開 — 稼働中
